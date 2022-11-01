@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Shopping cart</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <!-- CDN FontAwesome  -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+      integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <!-- Main Css -->
+    <link rel="stylesheet" href="/FE/main.css" />
+  </head>
+  <body>
+    <section class="shopping">
+      <div class="carticon">
+        <button>
+          <i class="fa fa-shopping-cart"></i>
+        </button>
+        <span id="cartTotal">0</span>
+      </div>
+      <!-- <div id="cartProduct"> -->
+      <div class="row shopping__content" id="cartProduct">
+        <!-- <div class="col-3 shopping__item">
+            <div class="shopping__header">
+              <i class="fa fa-heart icon1"></i>
+              <i class="fa fa-shopping-cart icon2"></i>
+            </div>
+            <div class="shopping__body">
+              <a href="#"
+                ><img
+                  src="./img/iphone-14-pro-max-tim-thumb-600x600.png"
+                  width="180px"
+              /></a>
+              <div class="shopping__text text-center">
+                <h2 class="cartProduct">Iphone 14 Pro Max</h2>
+                <h3>$<span class="price">100</span></h3>
+              </div>
+            </div>
+            <div class="shopping__footer">
+              <div class="shopping__size d-flex">
+                <h4 class="">Size:</h4>
+                <span><button class="btn btn-secondary">64GB</button></span>
+                <span><button class="btn btn-secondary">128GB</button></span>
+                <span><button class="btn btn-secondary">256GB</button></span>
+                <span><button class="btn btn-secondary">512GB</button></span>
+              </div>
+              <div class="shopping__color d-flex mt-3">
+                <h4>Color:</h4>
+                <span><button class="btn btn-success"></button></span>
+                <span><button class="btn btn-danger"></button></span>
+                <span><button class="btn btn-dark"></button></span>
+              </div>
+              <div class="shopping__cpu">
+                <div class="screen d-flex">
+                  <i class="fa fa-mobile-alt"></i>
+                  <p>6.7 inch, Super Retina XDR, 2796 x 1290 Pixels</p>
+                </div>
+                <div class="backFront d-flex">
+                  <i class="fa fa-camera"></i>
+                  <p><span>48.0 MP</span> + <span>12.0 MP</span></p>
+                </div>
+                <div class="desc d-flex">
+                  <i class="fa fa-database"></i>
+                  <p>Tuyệt đỉnh mọi thời đại</p>
+                </div>
+                <div class="type d-flex">
+                  <i class="fa fa-tablet-alt"></i>
+                  <p>Iphone</p>
+                </div>
+              </div>
+              <div class="shopping__buy">
+                <button onclick="totalCart()" class="btn btn-success buy">
+                  Buy now
+                </button>
+                <button onclick="addCart(event)" class="btn btn-success add">
+                  Add
+                </button>
+              </div>
+              <div class="shopping__quantity">
+                <span class="qty-change">
+                  <div class="d-flex ml-3 mt-3">
+                    <button type="button" class="btnQuantity">
+                      <i class="fas fa-chevron-left text-white"></i>
+                    </button>
+                    <p class="quantity">1</p>
+                    <button type="button" class="btnQuantity">
+                      <i class="fas fa-chevron-right text-white"></i>
+                    </button>
+                  </div>
+                </span>
+              </div>
+            </div>
+          </div> -->
+      </div>
+      <!-- </div> -->
+
+      <div class="card__overlay"></div>
+    </section>
+
+    <section class="shopping__select">
+      <select onchange="onChange()" name="" id="typeSelection">
+        <option value="">Tất cả</option>
+        <option value="Iphone">Iphone</option>
+        <option value="Samsung">Samsung</option>
+      </select>
+    </section>
+
+    <section class="card__total">
+      <span><i class="fa fa-times"></i></span>
+      <h2>Cart</h2>
+      <!-- <select onchange="onChange()" name="" id="typeSelection">
+        <option value="">Tất cả</option>
+        <option value="Iphone">Iphone</option>
+        <option value="Samsung">Samsung</option>
+      </select> -->
+
+      <div id="cart"></div>
+
+      <div class="card__final">
+        <strong>Total: $<span id="total">0</span></strong>
+        <div class="action">
+          <button
+            onclick="purchase()"
+            class="btnBuy"
+            data-toggle="modal"
+            data-target="#exampleModal"
+          >
+            Purchase <i class="fas fa-credit-card" style="color: #6665dd"></i>
+          </button>
+          <button onclick="clearCartList()" class="btnClear">
+            Clear Cart <i class="fas fa-trash" style="color: #bb342f"></i>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Modal purchase -->
+    <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content" id="modalPurchase">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Pay Cart</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" id="modal__total">
+            <!-- <div class="modal__item d-flex justify-content-between">
+              <div id="modal__details" class="modal__details d-flex">
+                <h4 id="modal__quantity">1</h4>
+                <h4 class="px-2">x</h4>
+                <h3 id="modal__name">Iphone 14</h3>
+              </div>
+              <div id="modal__total" class="modal__total">
+                <h4>$<span id="modal__price">3000</span></h4>
+              </div>
+            </div> -->
+          </div>
+          <div class="modal-footer d-flex justify-content-between">
+            <div class="modal__footer__total">
+              <h4>Total: $<span id="totalPrice">0</span></h4>
+            </div>
+            <div class="modal__button">
+              <button
+                id="modalClose"
+                type="button"
+                class="btn btn-danger"
+                data-dismiss="modal"
+              >
+                Close
+              </button>
+              <button
+                onclick="order()"
+                id="modalOrder"
+                type="button"
+                class="btn btn-success"
+              >
+                Order
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Order  -->
+    <section class="order" id="order">
+      <div
+        class="order__content d-flex justify-content-center align-items-center"
+      >
+        <div class="order__item">
+          <h3>Your order has been placed</h3>
+          <div
+            class="order__deli d-flex justify-content-center align-items-center"
+          >
+            <i class="fa fa-car"></i>
+            <p class="ml-2">
+              Your order will be delivered to you in 3-5 working days
+            </p>
+          </div>
+          <div
+            class="order__money d-flex justify-content-center align-items-center"
+            id="totalOrder"
+          >
+            <!-- <i class="fa fa-money-bill"></i>
+            <p class="ml-2">
+              You can pay <strong>$ 0</strong> by card or any online transaction
+              method after the products have been dilivered to you
+            </p> -->
+          </div>
+          <button onclick="next()" id="next" class="btn__next">Next</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Next  -->
+    <section class="next" id="continue">
+      <h2>Thanks for shopping with us</h2>
+      <button onclick="thanks()">Continue</button>
+    </section>
+
+    <!-- Axios CDN  -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.1.2/axios.min.js"
+      integrity="sha512-bHeT+z+n8rh9CKrSrbyfbINxu7gsBmSHlDCb3gUF1BjmjDzKhoKspyB71k0CIRBSjE5IVQiMMVBgCWjF60qsvA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- MAIN JS  -->
+    <script type="module" src="/FE/index.js"></script>
+  </body>
+</html>
