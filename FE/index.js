@@ -78,7 +78,7 @@ const renderProduct = (data) => {
             </div>
         </div>
         <div class="shopping__buy">
-          <button  class="btn btn-success buy">
+          <button onclick="buyNow(${i})" class="btn btn-success buy">
             Buy now
           </button>
           <button onclick="addCart(${i})" class="btn btn-success add">
@@ -230,7 +230,7 @@ const mapData = (cartListJSON) => {
   return result;
 };
 
-let updateCartList = (cartList) => {
+const updateCartList = (cartList) => {
   let cartListQuantity = 0;
 
   for (let i in cartList) {
@@ -238,6 +238,11 @@ let updateCartList = (cartList) => {
   }
 
   document.getElementById("cartTotal").innerHTML = cartListQuantity;
+};
+
+window.buyNow = (index) => {
+  addCart(index);
+  order();
 };
 
 // 9)------------------ Up Down Quantity ---------------
@@ -283,6 +288,14 @@ window.purchase = () => {
       `;
   }
 
+  let totalQuantity = "";
+  let quantitys = 0;
+  for (let i in cartList) {
+    quantitys += cartList[i].quantity;
+    totalQuantity = ` <h1>Store Phone,Hi</h1>
+    <p>You've purchased three (<span>${quantitys}</span>) items in our store:</p>`;
+  }
+
   let totalNamePrice = "";
   for (let i in cartList) {
     let itemPrice = cartList[i].quantity * cartList[i].product.price;
@@ -297,11 +310,15 @@ window.purchase = () => {
 
   if (totalPrice > 0) {
     document.querySelector(".card__total").style.right = "-100%";
-    // document.querySelector(".card__overlay").style.display = "none";
+
+    document.querySelector(".card__overlay").style.display = "none";
     document.querySelector(".total").style.left = "50%";
     document.querySelector("#totalNamePrice").innerHTML = totalNamePrice;
     document.querySelector("#totalSums").innerHTML = totals;
+    document.querySelector("#totalQuantity").innerHTML = totalQuantity;
   } else {
+    document.querySelector(".card__total").style.right = "-100%";
+    document.querySelector(".card__overlay").style.display = "none";
     return;
   }
 };
