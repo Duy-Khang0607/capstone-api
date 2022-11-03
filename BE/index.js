@@ -29,13 +29,14 @@ let addProduct = () => {
   })
     .then(function (res) {
       console.log(res);
+      getProduct();
+      document.querySelector("#myForm").reset();
     })
     .catch(function (error) {
       console.log(error);
     });
   productList.push(newProduct);
   rendderProduct();
-  getProduct();
 };
 
 let rendderProduct = (data) => {

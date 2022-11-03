@@ -25,7 +25,8 @@ const renderProduct = (data) => {
   for (let i in data) {
     let productItem = data[i];
     tableHTML += `
-      <div class="col shopping__item">
+    
+      <div class="col-3 shopping__item">
 
         <div class="shopping__header">
           <i class="fa fa-heart icon1"></i>
@@ -33,15 +34,15 @@ const renderProduct = (data) => {
         </div>
       
         <div class="shopping__body">
-        <a href="#" 
-          ><img
-            src="${productItem.img}"
-            width="180px"
-        /></a>
-        <div class="shopping__text text-center">
-          <h2 class="cartProduct">${productItem.name}</h2>
-          <h3>$<span class="price">${productItem.price}</span></h3>
-        </div>
+          <a href="#" 
+            ><img
+              src="${productItem.img}"
+              width="180px"
+          /></a>
+          <div class="shopping__text text-center">
+            <h2 class="cartProduct">${productItem.name}</h2>
+            <h3>$<span class="price">${productItem.price}</span></h3>
+          </div>
         </div>
         
         <div class="shopping__footer">
@@ -85,7 +86,6 @@ const renderProduct = (data) => {
           </button>
         </div>
       </div>
-
     </div>
     `;
   }
@@ -269,50 +269,39 @@ window.clearCartList = () => {
 };
 
 window.purchase = () => {
-  // document.querySelector(".card__total").style.right = "-100%";
-  // document.querySelector(".card__overlay").style.display = "none";
   let totalPrice = 0;
+  let totals = "";
   for (let i in cartList) {
     totalPrice += cartList[i].quantity * (cartList[i].product.price * 1);
+    totals = `
+    <div class="total__sum d-flex justify-content-between" id="totals">
+            <div><h4 class="">TOTAL:</h4></div>
+            <div>
+              <span>$${totalPrice}</span>
+            </div>
+          </div>
+      `;
   }
 
-  let totalName = "";
+  let totalNamePrice = "";
   for (let i in cartList) {
     let itemPrice = cartList[i].quantity * cartList[i].product.price;
-    totalName += `<div class="modal__item d-flex justify-content-between">
-    <div id="modal__details" class="modal__details d-flex">
-      <h4 id="modal__quantity">${cartList[i].quantity}</h4>
-      <h4 class="px-2">x</h4>
-      <h3 id="modal__name">${cartList[i].product.name}</h3>
-    </div>
-    <div id="modal__total" class="modal__total">
-      <h4>$<span id="modal__price">${itemPrice}</span></h4>
-    </div>
+    totalNamePrice += `<div
+    class="total__namePrice d-flex justify-content-between"
+    id="totalNamePrice"
+  >
+    <div class="total__name">${cartList[i].quantity}<span class="ml-3">${cartList[i].product.name}</span></div>
+    <div class="total__price">$${itemPrice}</div>
   </div>`;
   }
 
   if (totalPrice > 0) {
     document.querySelector(".card__total").style.right = "-100%";
-    document.querySelector(".card__overlay").style.display = "none";
-
-    document.querySelector(".modal").style.display = "block !important";
-    document.querySelector("#exampleModal").style.left = "50%";
-    document.querySelector("#exampleModal").style.top = "50%";
-    document.querySelector(".fade:not(.show)").style.opacity = "1";
-
-    document.querySelector("#totalPrice").innerHTML = totalPrice;
-
-    document.querySelector("#modal__total").innerHTML = totalName;
-  } else {
-    // document.querySelector(".card__total").style.right = "-100%";
     // document.querySelector(".card__overlay").style.display = "none";
-
-    // for (let i in cartList) {
-    //   document.getElementsByClassName[i](".modal-backdrop.show").style.opacity =
-    //     "0 ";
-    //   document.querySelector[i](".modal-backdrop").style.position =
-    //     "inherit !important";
-    // }
+    document.querySelector(".total").style.left = "50%";
+    document.querySelector("#totalNamePrice").innerHTML = totalNamePrice;
+    document.querySelector("#totalSums").innerHTML = totals;
+  } else {
     return;
   }
 };
@@ -333,7 +322,7 @@ window.order = () => {
   }
   document.querySelector("#totalOrder").innerHTML = html;
   document.querySelector("#order").style.top = "50%";
-  document.querySelector("#exampleModal").style.top = "-100%";
+  document.querySelector(".total").style.left = "-100%";
   clearCartList();
   updateCartList(cartList);
   renderCart(cartList);
@@ -345,9 +334,14 @@ window.next = () => {
 };
 window.thanks = () => {
   document.querySelector("#continue").style.top = "-100%";
-  document.querySelector(".modal-backdrop.show").style.opacity = "0";
-  document.querySelector(".modal-backdrop").style.position = "relative";
+  document.querySelector(".card__overlay").style.display = "none";
 };
+
+window.closeX = () => {
+  document.querySelector(".total").style.left = "-100%";
+  document.querySelector(".card__overlay").style.display = "none";
+};
+
 window.onload = () => {
   getProduct();
   getLocalCartList();
