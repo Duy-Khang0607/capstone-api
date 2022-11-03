@@ -10,6 +10,7 @@ const cartClose = document.querySelector(".fa-times");
 cartShow.addEventListener("click", function () {
   document.querySelector(".card__total").style.right = "0";
   document.querySelector(".card__overlay").style.display = "block";
+  // document.querySelector(".card__overlay").style.display = "none";
 });
 cartClose.addEventListener("click", function () {
   document.querySelector(".card__total").style.right = "-100%";
